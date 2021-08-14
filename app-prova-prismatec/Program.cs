@@ -30,10 +30,12 @@ namespace app_prova_prismatec
             int contFuncionario = 1;
             int contEmpresa = 1;
 
-            var localArquivo = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
-            var arquivo = localArquivo + "\\arquivo.json";
-            if (!Directory.Exists(localArquivo))
-                    Directory.CreateDirectory(localArquivo);
+            var pathFile = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
+            var arquivo = pathFile + "\\arquivo.json";
+            if (!Directory.Exists(pathFile))
+                    Directory.CreateDirectory(pathFile);
+
+            List <Empresa> listaEmpresas = new List<Empresa>();
 
             #region Empresa1
             var empresa1 = new Empresa();
@@ -131,15 +133,40 @@ namespace app_prova_prismatec
             contEmpresa++;
             #endregion
 
+            listaEmpresas.Add(empresa1);
+            listaEmpresas.Add(empresa2);
+            listaEmpresas.Add(empresa3);
+
             try
             {
-                using (StreamWriter sw = new StreamWriter(localArquivo + "\\arquivo.json"))
+                using (StreamWriter sw = new StreamWriter(pathFile + "\\arquivo_"+DateTime.Now.ToString("yyyy-MM-dd") +".json"))
                 {
-                    sw.WriteLine(empresa1.JsonSerializar(empresa1));
-                    sw.WriteLine(empresa1.JsonSerializar(empresa2));
-                    sw.WriteLine(empresa1.JsonSerializar(empresa3));
+                    sw.WriteLine(JsonConvert.SerializeObject(listaEmpresas, Formatting.Indented));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro: " + ex);
+            }
+
+            try
+            {
+                var strJson = "";
+                
+                using (StreamReader sr = new StreamReader(pathFile + "\\arquivo_" + DateTime.Now.ToString("yyyy-MM-dd") + ".json"))
+                {
+                    strJson = sr.ReadToEnd();
                 }
 
+                var empresa = JsonConvert.DeserializeObject<List<Empresa>>(strJson);
+
+                List<Empresa> result = Empresa.VerificarTelefone(empresa);
+
+                foreach (Empresa item in result)
+                {
+                    Console.WriteLine("Empresa: " + item.RazaoSocial + "\nTelefone: " + item.Telefone + "\n");
+                }
+                Console.Read();
             }
             catch (Exception ex)
             {

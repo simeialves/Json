@@ -21,14 +21,36 @@ namespace app_prova_prismatec.Models
         public List<Funcionario> Funcionarios { get; set; }
         //public IEnumerable<Funcionario> Funcionarios { get; set; }
 
-        public string JsonSerializar(Empresa empresa)
+        public static List<Empresa> VerificarTelefone(List<Empresa> listaEmpresas)
         {
-            return JsonConvert.SerializeObject(empresa, Formatting.Indented);
+            var result = listaEmpresas.Where(u => u.Telefone.Contains("(5"));
+            List<Empresa> listResult = new List<Empresa>();
+
+            foreach (Empresa item in result)
+            {
+                Console.WriteLine("Empresa: " + item.RazaoSocial + "\nTelefone: " + item.Telefone + "\n");
+                listResult.Add(listResult.Cnpj)(item.Cnpj);
+            }
+            return listResult;
         }
 
-        public static Empresa JsonDeserializar(string Json)
-        {
-            return JsonConvert.DeserializeObject<Empresa>(Json);
-        }
+
+
+        //public IEnumerable<Funcionario> Funcionarios { get; set; }
+
+        //public string JsonSerializar(Empresa empresa)
+        //{
+        //    return JsonConvert.SerializeObject(empresa, Formatting.Indented);
+        //}
+
+        //public string JsonSerializarLista(List<Empresa> lista)
+        //{
+        //    return JsonConvert.SerializeObject(lista, Formatting.Indented);
+        //}
+
+        //public static Empresa JsonDeserializar(string Json)
+        //{
+        //    return JsonConvert.DeserializeObject<List<Empresa>>(Json));
+        //}
     }
 }
