@@ -2,8 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,68 +27,124 @@ namespace app_prova_prismatec
 
             //TODO: Imprima no console logs dos eventos de todas as ações realizadas no sistema.
 
+            int contFuncionario = 1;
+            int contEmpresa = 1;
+
+            var localArquivo = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
+            var arquivo = localArquivo + "\\arquivo.json";
+            if (!Directory.Exists(localArquivo))
+                    Directory.CreateDirectory(localArquivo);
+
+            #region Empresa1
+            var empresa1 = new Empresa();
+
+            empresa1.Id = IntExtensions.ToGuid(contEmpresa);
+            empresa1.Cnpj = "55.611.018/0001-11";
+            empresa1.RazaoSocial = "Benício e Clarice Alimentos ME";
+            empresa1.NomeFantasia = "Benício e Clarice Alimentos ME";
+            empresa1.Telefone = "(31) 2922-5424";
+            empresa1.Funcionarios = new List<Funcionario>();
+
             Funcionario funcionario1 = new Funcionario();
-
-            funcionario1.Id = IntExtensions.ToGuid(1);
-            funcionario1.Cpf = "10067065694";
-            funcionario1.Nome = "Simei Alves";
-            funcionario1.IdEmpresa = IntExtensions.ToGuid(1);
-
-            Console.WriteLine("Id: " + funcionario1.Id);
-            Console.WriteLine("Cpf: " + funcionario1.Cpf);
-            Console.WriteLine("Nome: " + funcionario1.Nome);
-            Console.WriteLine("IdEmpresa: " + funcionario1.IdEmpresa);
-            Console.WriteLine("\n");
+            funcionario1.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario1.Cpf = "904.604.426-27";
+            funcionario1.Nome = "Pietro Marcelo Alexandre Viana";
+            funcionario1.IdEmpresa = empresa1.Id;
+            empresa1.Funcionarios.Add(funcionario1);
+            contFuncionario++;
 
             Funcionario funcionario2 = new Funcionario();
+            funcionario2.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario2.Cpf = "813.117.706-82";
+            funcionario2.Nome = "Rodrigo Cláudio Alves";
+            funcionario2.IdEmpresa = empresa1.Id;
+            empresa1.Funcionarios.Add(funcionario2);
+            contFuncionario++;
 
-            funcionario2.Id = IntExtensions.ToGuid(2);
-            funcionario2.Cpf = "06650590606";
-            funcionario2.Nome = "Stefane Parreiras";
-            funcionario2.IdEmpresa = IntExtensions.ToGuid(2);
+            contEmpresa++;
 
-            Console.WriteLine("Id: " + funcionario2.Id);
-            Console.WriteLine("Cpf: " + funcionario2.Cpf);
-            Console.WriteLine("Nome: " + funcionario2.Nome);
-            Console.WriteLine("IdEmpresa: " + funcionario2.IdEmpresa);
-            Console.WriteLine("\n");
+            #endregion
+
+            #region Empresa2
+            Empresa empresa2 = new Empresa();
+
+            empresa2.Id = IntExtensions.ToGuid(contEmpresa);
+            empresa2.Cnpj = "96.319.784/0001-94";
+            empresa2.RazaoSocial = "Breno e Elias Restaurante Ltda";
+            empresa2.NomeFantasia = "Restaurante 2 Irmãos";
+            empresa2.Telefone = "(55) 2695-0313";
+            empresa2.Funcionarios = new List<Funcionario>();
 
             Funcionario funcionario3 = new Funcionario();
+            funcionario3.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario3.Cpf = "644.004.020-02";
+            funcionario3.Nome = "Luciana Jennifer Pereira";
+            funcionario3.IdEmpresa = empresa2.Id;
+            empresa2.Funcionarios.Add(funcionario3);
+            contFuncionario++;
 
-            funcionario3.Id = IntExtensions.ToGuid(3);
-            funcionario3.Cpf = "08818963651";
-            funcionario3.Nome = "Erick Clavell";
-            funcionario3.IdEmpresa = IntExtensions.ToGuid(3);
+            Funcionario funcionario4 = new Funcionario();
+            funcionario4.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario4.Cpf = "449.149.940-38";
+            funcionario4.Nome = "Heitor Bernardo Benício Dias";
+            funcionario4.IdEmpresa = empresa2.Id;
+            empresa2.Funcionarios.Add(funcionario4);
+            contFuncionario++;
 
-            Console.WriteLine("Id: " + funcionario3.Id);
-            Console.WriteLine("Cpf: " + funcionario3.Cpf);
-            Console.WriteLine("Nome: " + funcionario3.Nome);
-            Console.WriteLine("IdEmpresa: " + funcionario3.IdEmpresa);
+            contEmpresa++;
+            #endregion
 
-            //var _data = new
-            //{
-            //    um = 1,
-            //    dois = 2,
-            //    tres = 3
-            //};
+            #region Empresa3
+            Empresa empresa3 = new Empresa();
 
-            //string json = JsonConvert.SerializeObject(_data);
+            empresa3.Id = IntExtensions.ToGuid(contEmpresa);
+            empresa3.Cnpj = "51.859.478/0001-02";
+            empresa3.RazaoSocial = "Nicolas e Emilly Locações de Automóveis ME";
+            empresa3.NomeFantasia = "N&M Locações";
+            empresa3.Telefone = "(51) 2846-7950";
+            empresa3.Funcionarios = new List<Funcionario>();
 
-            //System.IO.File.WriteAllText(@"C:\objeto.json", json);
+            Funcionario funcionario5 = new Funcionario();
+            funcionario5.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario5.Cpf = "506.908.520-45";
+            funcionario5.Nome = "Alícia Tatiane Sebastiana Galvão";
+            funcionario5.IdEmpresa = empresa3.Id;
+            empresa3.Funcionarios.Add(funcionario5);
+            contFuncionario++;
 
-        }
-    }
-        public static class IntExtensions
-        {
-            public static Guid ToGuid(this Int32 value)
+            Funcionario funcionario6 = new Funcionario();
+            funcionario6.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario6.Cpf = "282.579.600-04";
+            funcionario6.Nome = "Melissa Carla Giovanna Pires";
+            funcionario6.IdEmpresa = empresa3.Id;
+            empresa3.Funcionarios.Add(funcionario6);
+            contFuncionario++;
+
+            Funcionario funcionario7 = new Funcionario();
+            funcionario7.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario7.Cpf = "337.623.520-11";
+            funcionario7.Nome = "Alexandre César Leandro Caldeira";
+            funcionario7.IdEmpresa = empresa3.Id;
+            empresa3.Funcionarios.Add(funcionario7);
+            contFuncionario++;
+
+            contEmpresa++;
+            #endregion
+
+            try
             {
-                if (value >= 0) // if value is positive
-                    return new Guid(string.Format("00000000-0000-0000-0000-00{0:0000000000}", value));
-                else if (value > Int32.MinValue) // if value is negative
-                    return new Guid(string.Format("00000000-0000-0000-0000-01{0:0000000000}", Math.Abs(value)));
-                else //if (value == Int32.MinValue)
-                    return new Guid("00000000-0000-0000-0000-012147483648");  // Because Abs(-12147483648) generates a stack overflow due to being > 12147483647 (Int32.Max)
+                using (StreamWriter sw = new StreamWriter(localArquivo + "\\arquivo.json"))
+                {
+                    sw.WriteLine(empresa1.JsonSerializar(empresa1));
+                    sw.WriteLine(empresa1.JsonSerializar(empresa2));
+                    sw.WriteLine(empresa1.JsonSerializar(empresa3));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro: " + ex);
             }
         }
-
+    }
 }

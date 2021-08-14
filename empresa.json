@@ -1,0 +1,71 @@
+[
+  {
+    "Id": "00000000-0000-0000-0000-000000000001",
+    "Cnpj": "55.611.018/0001-11",
+    "RazaoSocial": "Benício e Clarice Alimentos ME",
+    "NomeFantasia": "Benício e Clarice Alimentos ME",
+    "Telefone": "(31) 2922-5424",
+    "Funcionarios": [
+      {
+        "Id": "00000000-0000-0000-0000-000000000001",
+        "Cpf": "904.604.426-27",
+        "Nome": "Pietro Marcelo Alexandre Viana",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000001"
+      },
+      {
+        "Id": "00000000-0000-0000-0000-000000000002",
+        "Cpf": "813.117.706-82",
+        "Nome": "Rodrigo Cláudio Alves",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000001"
+      }
+    ]
+  },
+  {
+    "Id": "00000000-0000-0000-0000-000000000002",
+    "Cnpj": "96.319.784/0001-94",
+    "RazaoSocial": "Breno e Elias Restaurante Ltda",
+    "NomeFantasia": "Restaurante 2 Irmãos",
+    "Telefone": "(55) 2695-0313",
+    "Funcionarios": [
+      {
+        "Id": "00000000-0000-0000-0000-000000000003",
+        "Cpf": "644.004.020-02",
+        "Nome": "Luciana Jennifer Pereira",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000002"
+      },
+      {
+        "Id": "00000000-0000-0000-0000-000000000004",
+        "Cpf": "449.149.940-38",
+        "Nome": "Heitor Bernardo Benício Dias",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000002"
+      }
+    ]
+  },
+  {
+    "Id": "00000000-0000-0000-0000-000000000003",
+    "Cnpj": "51.859.478/0001-02",
+    "RazaoSocial": "Nicolas e Emilly Locações de Automóveis ME",
+    "NomeFantasia": "N&M Locações",
+    "Telefone": "(51) 2846-7950",
+    "Funcionarios": [
+      {
+        "Id": "00000000-0000-0000-0000-000000000005",
+        "Cpf": "506.908.520-45",
+        "Nome": "Alícia Tatiane Sebastiana Galvão",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000003"
+      },
+      {
+        "Id": "00000000-0000-0000-0000-000000000006",
+        "Cpf": "282.579.600-04",
+        "Nome": "Melissa Carla Giovanna Pires",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000003"
+      },
+      {
+        "Id": "00000000-0000-0000-0000-000000000007",
+        "Cpf": "337.623.520-11",
+        "Nome": "Alexandre César Leandro Caldeira",
+        "IdEmpresa": "00000000-0000-0000-0000-000000000003"
+      }
+    ]
+  }
+]

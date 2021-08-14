@@ -10,12 +10,12 @@ namespace app_prova_prismatec.Models
     {
         public static Guid ToGuid(this Int32 value)
         {
-            if (value >= 0) // if value is positive
+            if (value >= 0)
                 return new Guid(string.Format("00000000-0000-0000-0000-00{0:0000000000}", value));
-            else if (value > Int32.MinValue) // if value is negative
+            else if (value > Int32.MinValue)
                 return new Guid(string.Format("00000000-0000-0000-0000-01{0:0000000000}", Math.Abs(value)));
-            else //if (value == Int32.MinValue)
-                return new Guid("00000000-0000-0000-0000-012147483648");  // Because Abs(-12147483648) generates a stack overflow due to being > 12147483647 (Int32.Max)
+            else
+                return new Guid("00000000-0000-0000-0000-012147483648");
         }
     }
 }
