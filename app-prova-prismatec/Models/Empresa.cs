@@ -20,7 +20,6 @@ namespace app_prova_prismatec.Models
         public string Telefone { get; set; }
         public List<Funcionario> Funcionarios { get; set; }
         //public IEnumerable<Funcionario> Funcionarios { get; set; }
-
         public static List<Empresa> VerificarTelefone(List<Empresa> listaEmpresas)
         {
             var result = listaEmpresas.Where(l => l.Telefone.Contains("(5"));

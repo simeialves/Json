@@ -36,8 +36,6 @@ namespace app_prova_prismatec
 
             pathFile = pathFile + "\\arquivo.json";
 
-            List<Empresa> listaEmpresas = new List<Empresa>();
-
             #region Empresa1
             var empresa1 = new Empresa();
 
@@ -134,6 +132,8 @@ namespace app_prova_prismatec
             contEmpresa++;
             #endregion
 
+            List<Empresa> listaEmpresas = new List<Empresa>();
+
             listaEmpresas.Add(empresa1);
             listaEmpresas.Add(empresa2);
             listaEmpresas.Add(empresa3);
@@ -163,7 +163,7 @@ namespace app_prova_prismatec
 
                 List<Empresa> result = Empresa.VerificarTelefone(empresa);
 
-                Console.WriteLine("Foram localizadas as seguintes empresas com o código do RS:");
+                Console.WriteLine("Foram localizadas as seguintes empresas com o código do Rio Grande do Sul:");
                 foreach (Empresa item in result)
                 {
                     Console.WriteLine("\n");
