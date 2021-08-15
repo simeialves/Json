@@ -28,8 +28,8 @@ namespace app_prova_prismatec.Models
 
             foreach (Empresa item in result)
             {
-                Console.WriteLine("Empresa: " + item.RazaoSocial + "\nTelefone: " + item.Telefone + "\n");
-                listResult.Add(listResult.Cnpj)(item.Cnpj);
+              //  Console.WriteLine("Empresa: " + item.RazaoSocial + "\nTelefone: " + item.Telefone + "\n");
+                listResult.Add(item);
             }
             return listResult;
         }

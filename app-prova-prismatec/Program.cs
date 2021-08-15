@@ -31,9 +31,10 @@ namespace app_prova_prismatec
             int contEmpresa = 1;
 
             var pathFile = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
-            var arquivo = pathFile + "\\arquivo.json";
             if (!Directory.Exists(pathFile))
                     Directory.CreateDirectory(pathFile);
+
+            pathFile = pathFile + "\\arquivo.json";
 
             List <Empresa> listaEmpresas = new List<Empresa>();
 
@@ -139,7 +140,7 @@ namespace app_prova_prismatec
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(pathFile + "\\arquivo_"+DateTime.Now.ToString("yyyy-MM-dd") +".json"))
+                using (StreamWriter sw = new StreamWriter(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(listaEmpresas, Formatting.Indented));
                 }
@@ -153,7 +154,7 @@ namespace app_prova_prismatec
             {
                 var strJson = "";
                 
-                using (StreamReader sr = new StreamReader(pathFile + "\\arquivo_" + DateTime.Now.ToString("yyyy-MM-dd") + ".json"))
+                using (StreamReader sr = new StreamReader(pathFile))
                 {
                     strJson = sr.ReadToEnd();
                 }
@@ -162,9 +163,17 @@ namespace app_prova_prismatec
 
                 List<Empresa> result = Empresa.VerificarTelefone(empresa);
 
+                Console.WriteLine("Foram localizadas as seguintes empresas com o código do RS:");
                 foreach (Empresa item in result)
                 {
-                    Console.WriteLine("Empresa: " + item.RazaoSocial + "\nTelefone: " + item.Telefone + "\n");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("----------");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Id: " + item.Id);
+                    Console.WriteLine("Cnpj: " + item.Cnpj);
+                    Console.WriteLine("Razao Social: " + item.RazaoSocial);
+                    Console.WriteLine("Nome Fantasia: " + item.NomeFantasia);
+                    Console.WriteLine("Telefone: " + item.Telefone);
                 }
                 Console.Read();
             }
