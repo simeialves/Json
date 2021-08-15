@@ -8,12 +8,33 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace app_prova_prismatec
 {
     class Program
     {
+        public static void VerificarTelefone(List<Empresa> empresas, int ms)
+        {
+            Console.WriteLine("\nVerificando empresas com o código do Telefone do Rio Grande do Sul - " + DateTime.Now);
+            Thread.Sleep(ms);
+
+            List<Empresa> result = Empresa.VerificarTelefone(empresas);
+
+            Console.WriteLine("\nForam localizadas " + result.Count + " empresas com o código do Rio Grande do Sul:");
+            foreach (Empresa item in result)
+            {
+                Console.WriteLine("Id: " + item.Id);
+                Console.WriteLine("Cnpj: " + item.Cnpj);
+                Console.WriteLine("Razao Social: " + item.RazaoSocial);
+                Console.WriteLine("Nome Fantasia: " + item.NomeFantasia);
+                Console.WriteLine("Telefone: " + item.Telefone);
+                Console.WriteLine("\n");
+            }
+
+            Thread.Sleep(ms + 2000);
+        }
         static void Main(string[] args)
         {
             //TODO: Conforme a abordagem Domain Driven Design, crie uma instância e utilize a entidade "Empresa" e "Funcionario",
@@ -29,10 +50,31 @@ namespace app_prova_prismatec
 
             int contFuncionario = 1;
             int contEmpresa = 1;
+            int ms = 3000;
+            DateTime horarioInicial;
+            string novoTelefone = "(54) 3610-6966";
+
+            horarioInicial = DateTime.Now;
+
+            Console.WriteLine("Inicio do processo - " + DateTime.Now);
+            Thread.Sleep(ms);
 
             var pathFile = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
+
+            Console.WriteLine("\nVerificando a existência do diretório do arquivo Json - " + DateTime.Now);
+            Thread.Sleep(ms);
+
             if (!Directory.Exists(pathFile))
-                    Directory.CreateDirectory(pathFile);
+            {
+                Directory.CreateDirectory(pathFile);
+                Console.WriteLine("\nDiretório não encontrado. Criando diretório do arquivo Json em \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
+            }
+            else
+            {
+                Console.WriteLine("\nDiretório localizado - " + DateTime.Now);
+                Thread.Sleep(ms);
+            }
 
             pathFile = pathFile + "\\arquivo.json";
 
@@ -66,6 +108,9 @@ namespace app_prova_prismatec
 
             #endregion
 
+            Console.WriteLine("\nPopulando instância com a primeira empresa (" + empresa1.RazaoSocial + ") e seus funcionários - " + DateTime.Now);
+            Thread.Sleep(ms);
+
             #region Empresa2
             Empresa empresa2 = new Empresa();
 
@@ -94,6 +139,9 @@ namespace app_prova_prismatec
 
             contEmpresa++;
             #endregion
+
+            Console.WriteLine("\nPopulando instância com a segunda empresa (" + empresa2.RazaoSocial + ") e seus funcionários - " + DateTime.Now);
+            Thread.Sleep(ms);
 
             #region Empresa3
             Empresa empresa3 = new Empresa();
@@ -132,6 +180,9 @@ namespace app_prova_prismatec
             contEmpresa++;
             #endregion
 
+            Console.WriteLine("\nPopulando instância com a terceira empresa (" + empresa3.RazaoSocial + ") e seus funcionários - " + DateTime.Now);
+            Thread.Sleep(ms);
+
             List<Empresa> listaEmpresas = new List<Empresa>();
 
             listaEmpresas.Add(empresa1);
@@ -140,10 +191,13 @@ namespace app_prova_prismatec
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(pathFile))
+                using (StreamWriter sw = File.CreateText(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(listaEmpresas, Formatting.Indented));
                 }
+
+                Console.WriteLine("\nSerializando e criando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
             }
             catch (Exception ex)
             {
@@ -153,7 +207,7 @@ namespace app_prova_prismatec
             try
             {
                 var strJson = "";
-                
+
                 using (StreamReader sr = new StreamReader(pathFile))
                 {
                     strJson = sr.ReadToEnd();
@@ -161,26 +215,56 @@ namespace app_prova_prismatec
 
                 var empresa = JsonConvert.DeserializeObject<List<Empresa>>(strJson);
 
-                List<Empresa> result = Empresa.VerificarTelefone(empresa);
+                Console.WriteLine("\nLendo e desserializando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
 
-                Console.WriteLine("Foram localizadas as seguintes empresas com o código do Rio Grande do Sul:");
-                foreach (Empresa item in result)
-                {
-                    Console.WriteLine("\n");
-                    Console.WriteLine("----------");
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Id: " + item.Id);
-                    Console.WriteLine("Cnpj: " + item.Cnpj);
-                    Console.WriteLine("Razao Social: " + item.RazaoSocial);
-                    Console.WriteLine("Nome Fantasia: " + item.NomeFantasia);
-                    Console.WriteLine("Telefone: " + item.Telefone);
-                }
-                Console.Read();
+                VerificarTelefone(empresa, ms);
+
+                Thread.Sleep(ms + 2000);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Erro: " + ex);
             }
+
+            try
+            {
+                var strJson = "";
+
+                using (StreamReader sr = new StreamReader(pathFile))
+                {
+                    strJson = sr.ReadToEnd();
+                }
+
+                var empresa = JsonConvert.DeserializeObject<List<Empresa>>(strJson);
+
+                Console.WriteLine("\nLendo e desserializando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
+
+                Console.WriteLine("\nAlterando telefone da empresa \"" + empresa[0].RazaoSocial + "\" de \"" + empresa[0].Telefone +
+                    "\" para \"" + novoTelefone + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
+
+                empresa[0].Telefone = novoTelefone;
+
+                Console.WriteLine("\nSerializando e alterando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
+
+                using (StreamWriter sw = File.AppendText(pathFile))
+                {
+                    sw.WriteLine(JsonConvert.SerializeObject(empresa, Formatting.Indented));
+                }
+
+                VerificarTelefone(empresa, ms);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            Console.WriteLine("\nFim do processo - " + DateTime.Now + ". Tempo Gasto: " + DateTime.Now.Subtract(horarioInicial));
+            Thread.Sleep(ms);
+            Console.ReadKey();
         }
     }
 }
