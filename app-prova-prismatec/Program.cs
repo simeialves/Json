@@ -36,7 +36,7 @@ namespace app_prova_prismatec
 
             pathFile = pathFile + "\\arquivo.json";
 
-            List <Empresa> listaEmpresas = new List<Empresa>();
+            List<Empresa> listaEmpresas = new List<Empresa>();
 
             #region Empresa1
             var empresa1 = new Empresa();
