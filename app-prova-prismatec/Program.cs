@@ -1,16 +1,10 @@
 ﻿using app_prova_prismatec.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace app_prova_prismatec
 {
