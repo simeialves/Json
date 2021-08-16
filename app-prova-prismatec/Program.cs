@@ -62,7 +62,7 @@ namespace app_prova_prismatec
             if (!Directory.Exists(pathFile))
             {
                 Directory.CreateDirectory(pathFile);
-                Console.WriteLine("\nDiretório não encontrado. Criando diretório do arquivo Json em \"" + pathFile + "\" - " + DateTime.Now);
+                Console.WriteLine("\nDiretório não encontrado. Criando diretório Json em \"" + pathFile + "\" - " + DateTime.Now);
                 Thread.Sleep(ms);
             }
             else
@@ -216,7 +216,7 @@ namespace app_prova_prismatec
 
             try
             {
-                using (StreamWriter sw = File.CreateText(pathFile))
+                using (StreamWriter sw = new StreamWriter(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(listaEmpresas, Formatting.Indented));
                     Console.WriteLine("\nArquivo Json criado com sucesso no diretório \"" + pathFile + "\" - " + DateTime.Now);
@@ -277,7 +277,6 @@ namespace app_prova_prismatec
                 Console.WriteLine("\nSerializando e alterando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
                 Thread.Sleep(ms);
 
-               //using (StreamWriter sw = File.AppendText(pathFile))
                 using (StreamWriter sw = new StreamWriter(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(empresa, Formatting.Indented));
