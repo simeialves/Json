@@ -1,5 +1,6 @@
 ﻿using app_prova_prismatec.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,7 +23,7 @@ namespace app_prova_prismatec
 
             List<Empresa> result = Empresa.VerificarTelefone(empresas);
 
-            Console.WriteLine("\nForam localizadas " + result.Count + " empresas com o código do Rio Grande do Sul:");
+            Console.WriteLine("\nForam localizadas " + result.Count + " empresas com o código do Rio Grande do Sul:\n");
             foreach (Empresa item in result)
             {
                 Console.WriteLine("Id: " + item.Id);
@@ -52,14 +53,14 @@ namespace app_prova_prismatec
             int contEmpresa = 1;
             int ms = 3000;
             DateTime horarioInicial;
-            string novoTelefone = "(54) 3610-6966";
+            string novoTelefone = "(54) 3397-5706";
 
             horarioInicial = DateTime.Now;
 
             Console.WriteLine("Inicio do processo - " + DateTime.Now);
             Thread.Sleep(ms);
 
-            var pathFile = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
+            var pathFile = ConfigurationManager.ConnectionStrings["path"].ConnectionString;
 
             Console.WriteLine("\nVerificando a existência do diretório do arquivo Json - " + DateTime.Now);
             Thread.Sleep(ms);
@@ -76,7 +77,7 @@ namespace app_prova_prismatec
                 Thread.Sleep(ms);
             }
 
-            pathFile = pathFile + "\\arquivo.json";
+            pathFile += "\\arquivo.json";
 
             #region Empresa1
             var empresa1 = new Empresa();
@@ -94,6 +95,7 @@ namespace app_prova_prismatec
             funcionario1.Nome = "Pietro Marcelo Alexandre Viana";
             funcionario1.IdEmpresa = empresa1.Id;
             empresa1.Funcionarios.Add(funcionario1);
+            
             contFuncionario++;
 
             Funcionario funcionario2 = new Funcionario();
@@ -183,6 +185,35 @@ namespace app_prova_prismatec
             Console.WriteLine("\nPopulando instância com a terceira empresa (" + empresa3.RazaoSocial + ") e seus funcionários - " + DateTime.Now);
             Thread.Sleep(ms);
 
+            #region Empresa4
+            /*Empresa empresa4 = new Empresa();
+
+            empresa4.Id = IntExtensions.ToGuid(contEmpresa);
+            empresa4.Cnpj = "13.422.886/0001-03";
+            empresa4.RazaoSocial = "Lorenzo e Nina Gráfica ME";
+            empresa4.NomeFantasia = "Gráfica da Nina";
+            empresa4.Telefone = "(55) 3397-5706";
+            empresa4.Funcionarios = new List<Funcionario>();
+
+            Funcionario funcionario8 = new Funcionario();
+            funcionario8.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario8.Cpf = "148.266.850-50";
+            funcionario8.Nome = "Bento Thales Costa";
+            funcionario8.IdEmpresa = empresa4.Id;
+            empresa4.Funcionarios.Add(funcionario8);
+            contFuncionario++;
+
+            Funcionario funcionario9 = new Funcionario();
+            funcionario9.Id = IntExtensions.ToGuid(contFuncionario);
+            funcionario9.Cpf = "604.529.910-80";
+            funcionario9.Nome = "Daiane Marli Carolina Carvalho";
+            funcionario9.IdEmpresa = empresa4.Id;
+            empresa4.Funcionarios.Add(funcionario9);
+            contFuncionario++;
+
+            contEmpresa++;*/
+            #endregion
+
             List<Empresa> listaEmpresas = new List<Empresa>();
 
             listaEmpresas.Add(empresa1);
@@ -194,6 +225,8 @@ namespace app_prova_prismatec
                 using (StreamWriter sw = File.CreateText(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(listaEmpresas, Formatting.Indented));
+                    Console.WriteLine("\nArquivo Json criado com sucesso no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                    Thread.Sleep(ms);
                 }
 
                 Console.WriteLine("\nSerializando e criando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
@@ -250,10 +283,23 @@ namespace app_prova_prismatec
                 Console.WriteLine("\nSerializando e alterando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
                 Thread.Sleep(ms);
 
-                using (StreamWriter sw = File.AppendText(pathFile))
+               //using (StreamWriter sw = File.AppendText(pathFile))
+                using (StreamWriter sw = new StreamWriter(pathFile))
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(empresa, Formatting.Indented));
+                    Console.WriteLine("\nArquivo Json alterado com sucesso no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                    Thread.Sleep(ms);
                 }
+
+                Console.WriteLine("\nLendo e desserializando arquivo Json no diretório \"" + pathFile + "\" - " + DateTime.Now);
+                Thread.Sleep(ms);
+
+                using (StreamReader sr = new StreamReader(pathFile))
+                {
+                    strJson = sr.ReadToEnd();
+                }
+
+                empresa = JsonConvert.DeserializeObject<List<Empresa>>(strJson);
 
                 VerificarTelefone(empresa, ms);
             }
